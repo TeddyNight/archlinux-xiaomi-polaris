@@ -63,7 +63,10 @@ build() {
     unset LDFLAGS
     unset CFLAGS
 
-    make -j all modules dtbs
+    export MAKEOPTS='-j8'
+    export MAKEFLAGS='-j8'
+
+    make all modules dtbs
 }
 
 _package() {
