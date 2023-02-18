@@ -3,7 +3,7 @@
 # Based on Arch Linux and Arch Linux for ARM PKGBUILDs
 
 pkgbase="linux-sdm845"
-pkgver="6.1"
+pkgver="5.19.6"
 pkgrel="0"
 
 _pkgdesc="Linux SDM845"
@@ -16,7 +16,7 @@ _ref_ksource="42f21f96dbeda3d7d855db77e9e6114a1743a813"
 
 
 source=(
-    "https://gitlab.com/MollySophia/linux-sdm845/-/archive/sdm845/6.1-dev/linux-sdm845-sdm845-${pkgver}-dev.tar.gz"
+    "https://gitlab.com/sdm845-mainline/linux/-/archive/sdm845-${pkgver}/linux-sdm845-${pkgver}.tar.gz"
     "linux-sdm845.preset"
     "linux-sdm845.preset"
 )
@@ -25,7 +25,7 @@ sha256sums=('SKIP'
             '893841A69291A2B8433F738F537EAA7CDD2FD6F60C490D6BBD4BBDC5AB41AA0D')
 
 prepare() {
-    mv "${srcdir}/linux-sdm845-sdm845-${pkgver}-dev" "${srcdir}/kernel"
+    mv "${srcdir}/linux-sdm845-${pkgver}" "${srcdir}/kernel"
     cd "${srcdir}/kernel"
 
     msg2 "Setting version..."
@@ -63,10 +63,7 @@ build() {
     unset LDFLAGS
     unset CFLAGS
 
-    export MAKEOPTS='-j8'
-    export MAKEFLAGS='-j8'
-
-    make all modules dtbs
+    make -j all modules dtbs
 }
 
 _package() {
