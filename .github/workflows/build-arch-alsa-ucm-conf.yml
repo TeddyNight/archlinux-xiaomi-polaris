@@ -1,11 +1,11 @@
 on:
   push:
     tags:
-      - 'alsa-ucm-oneplus-*'
+      - 'alsa-ucm-sdm845-*'
 
 jobs:
   build:
-    name: Build alsa-ucm-oneplus package
+    name: Build alsa-ucm-sdm845 package
     runs-on: ubuntu-latest
     container: archlinux
 
@@ -21,7 +21,7 @@ jobs:
 
     - name: Build Package
       run: |
-        cd alsa-ucm-oneplus
+        cd alsa-ucm-sdm845
 
         # Fix permissions (can't makepkg as root)
         echo "nobody ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
@@ -38,12 +38,12 @@ jobs:
     - name: Prepare release
       run: |
         mkdir release
-        mv alsa-ucm-oneplus/*.pkg.tar.zst release
+        mv alsa-ucm-sdm845/*.pkg.tar.zst release
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: alsa-ucm-oneplus
+        name: alsa-ucm-sdm845
         path: release
 
   release:
@@ -55,13 +55,13 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v1
       with:
-        name: alsa-ucm-oneplus
+        name: alsa-ucm-sdm845
 
     - name: Upload assets
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.BUILD_TOKEN }}
-        file: ./*alsa-ucm-oneplus/*
+        file: ./*alsa-ucm-sdm845/*
         tag: ${{ github.ref }}
         overwrite: true
         file_glob: true

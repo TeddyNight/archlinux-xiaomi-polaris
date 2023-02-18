@@ -1,0 +1,18 @@
+# Maintainer: Philip Müller <philm@manjaro.org>
+pkgname=alsa-ucm-sdm845
+pkgver=14
+pkgrel=1
+pkgdesc="UCM files for sdm845 devices"
+arch=(any)
+url="https://gitlab.com/sdm845-mainline/alsa-ucm-conf/"
+license=('BSD-3-Clause')
+depends=('alsa-ucm-conf>=1.2.6.2')
+_ucm_commit="9ed12836b269764c4a853411d38ccb6abb70b383"
+source=("alsa-ucm-conf-$_ucm_commit.tar.gz::https://gitlab.com/sdm845-mainline/alsa-ucm-conf/-/archive/$_ucm_commit/alsa-ucm-conf-$_ucm_commit.tar.gz")
+
+package() {
+        mkdir -p "$pkgdir"/usr/share/alsa/ucm2
+        cp -r "$srcdir/alsa-ucm-conf-$_ucm_commit"/ucm2 "$pkgdir"/usr/share/alsa/
+}
+
+sha512sums=('e55545b0b319bb0cb7e8c6ca961828f7e8c389f97b45492e0c432b9bbd5d3158359828e852ceac68cbead4f850c19e06ac565dac2dcae11d40486ba641e3e7ec')
