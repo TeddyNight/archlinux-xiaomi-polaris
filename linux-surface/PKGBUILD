@@ -3,7 +3,7 @@
 # Based on Arch Linux and Arch Linux for ARM PKGBUILDs
 
 pkgbase="linux-sdm845"
-pkgver="6.2"
+pkgver="6.1"
 pkgrel="0"
 
 _pkgdesc="Linux SDM845"
@@ -12,11 +12,11 @@ arch=("aarch64")
 options=("!strip")
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'dtc')
 
-_ref_ksource="1b7bc6e0d99b53bd89f39a331b8bfbcf464a4ce2"
+_ref_ksource="42f21f96dbeda3d7d855db77e9e6114a1743a813"
 
 
 source=(
-    "kernel::git+https://gitlab.com/sdm845-mainline/linux.git#commit=${_ref_ksource}"
+    "https://gitlab.com/MollySophia/linux-sdm845/-/archive/sdm845/6.1-dev/linux-sdm845-sdm845-${pkgver}-dev.tar.gz"
     "linux-sdm845.preset"
     "linux-sdm845.preset"
 )
@@ -25,6 +25,7 @@ sha256sums=('SKIP'
             '893841A69291A2B8433F738F537EAA7CDD2FD6F60C490D6BBD4BBDC5AB41AA0D')
 
 prepare() {
+    mv "${srcdir}/linux-sdm845-sdm845-${pkgver}-dev" "${srcdir}/kernel"
     cd "${srcdir}/kernel"
 
     msg2 "Setting version..."
@@ -39,9 +40,8 @@ prepare() {
     # add mix2s patch
     # echo "Add mix2s.patch"
     # pwd
-    patch -p1 < ../../../MI8-dipper.patch
+    # patch -p1 < ../../../MI8-dipper.patch
     patch -p1 < ../../../nfc.patch
-    patch -p1 < ../../../0001-readd-tas2559-in-dts.patch
     make ARCH=arm64 defconfig sdm845.config
     # add mix2s panel driver
     sed -i "s/^.*CONFIG_DRM_PANEL_JDI_NT35596S.*$/CONFIG_DRM_PANEL_JDI_NT35596S=y/" .config
@@ -62,6 +62,9 @@ build() {
 
     unset LDFLAGS
     unset CFLAGS
+
+    export MAKEOPTS='-j8'
+    export MAKEFLAGS='-j8'
 
     make all modules dtbs
 }
