@@ -1,17 +1,25 @@
-From 73b0f500d5327cad0cd5b1682298d72aa8e4e58b Mon Sep 17 00:00:00 2001
+From b78aecde5aa6f9ecea082f9d44c7df6ee8ba05a6 Mon Sep 17 00:00:00 2001
 From: teddynight <tanyuliang2@gmail.com>
-Date: Fri, 17 Feb 2023 21:09:25 -0500
+Date: Fri, 17 Feb 2023 22:32:46 -0500
 Subject: [PATCH] readd tas2559 in dts
 
 ---
- .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   | 109 ++++++++++++++++++
- 1 file changed, 109 insertions(+)
+ .../boot/dts/qcom/sdm845-xiaomi-polaris.dts   | 110 ++++++++++++++++++
+ 1 file changed, 110 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index dba7c2693..5cac84d4d 100644
+index dba7c2693..bd9e5430f 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -454,6 +454,24 @@
+@@ -12,6 +12,7 @@
+ #include <dt-bindings/input/linux-event-codes.h>
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
++#include <dt-bindings/sound/qcom,q6voice.h>
+ #include "sdm845.dtsi"
+ #include "pm8998.dtsi"
+ #include "pmi8998.dtsi"
+@@ -454,6 +455,24 @@
         status = "okay";
  };
 
@@ -36,7 +44,7 @@ index dba7c2693..5cac84d4d 100644
  &i2c14 {
         clock-frequency = <400000>;
         dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
-@@ -580,6 +598,97 @@
+@@ -580,6 +599,97 @@
         };
  };
 
